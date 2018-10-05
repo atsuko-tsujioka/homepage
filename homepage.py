@@ -10,8 +10,9 @@ i = 0
 with open('homepage.csv', 'r') as a:
     for line in a:
         i+=1
-        arr = line[:-1].split(',')
-        urllist.append([arr[0],arr[4]])
+        arr = line[:-1].replace('"','').split(',')
+        url = arr[1]
+        urllist.append([arr[0],url])
 
 import aiohttp
 import asyncio
@@ -32,7 +33,7 @@ async def fetch(session, url, id):
 
 
 async def main():
-    with open('result.csv', 'w') as rfile:
+    with open('result_homepage.csv', 'w') as rfile:
         writer = csv.writer(rfile,lineterminator='\n')
         async with aiohttp.ClientSession() as session:
             urls = urllist
